@@ -1,0 +1,45 @@
+(a) Explain, in English, how we may model this problem using a graph. Your answer should at least
+include what is considered to be a vertex/edge in the graph, how to store the graph, etc.
+
+• We can implement an adjacency matrix to represent the two-dimensional maze.
+• The vertices are those accessible positions M[i][j] = 1
+• The edges are the connection between two neighbouring positions.
+• The reason is because a maze tends to have many possible paths, we say the number of connections
+  between any two positions (edges = |E|) is greater than the number of accessible positions
+  (vertices = |V|). Since |E| > |V|, we know it is a dense graph.
+• Thus the adjacency matrix is used to store a dense graph.
+
+
+(b) Explain, in English, how to determine whether there is a path from the starting point to the goal
+point. Use Big-Oh notation to express the worst case complexity of your approach, in terms of n.
+
+• Assume we have n vertices and n edges in this graph. To find a path from the starting point to
+  the goal point, we can employ depth-first search (DFS) or breadth-first search (BFS) to traverse
+  our graph.
+• In DFS method, we start at the starting point, and DFS will traverse each branch (path) until
+  we reach the goal point. In the worst case, the goal point is located in the last path. Thus the
+  DFS need to traverse every paths. It has a O(n^2) complexity.
+• In BFS method, we start at the starting point, and BFS will traverse every level from the starting
+  point, until it reaches the level where the goal point is. In the worst case, the goal point is located
+  in the highest level. Thus it has a O(n^2) complexity.
+• To summarise, in both scenarios, we have a complexity of O(n^2) for the worst case.
+
+
+(c) Explain, in English, how to find a shortest path (minimal number of movements) from the starting
+point to the goal point.
+
+• To find the shortest path, we apply the BFS method.
+• Step1. We implement a queue to store the coordinates of positions in adjacency matrix, and a
+  collection of linked list to store the paths we have visited.
+• Step2. We enqueue the position (the fisrt position is the starting point) to the queue, mark it
+  as visited. Initialize one linked list with the first node being the starting point.
+• Step3. When the queue is not empty, we dequeue the first element, mark it as visited, and find
+  all accessible neighbouring positions that are not visited. Each time when there is a new path,
+  we duplicate the current linked list to link different nodes. This is to construct several linked
+  lists that represent different paths. We continue these processes until the queue is empty or the
+  goal point is found (go to Step5).
+• Step4. Then we enqueue those found accessible neighbouring positions. Repeat Step3.
+• Step5. Return the linked list end with the goal point. It’s the found shortest path of the maze.
+  The lenght of this linked list is the minimal number of movements.
+• The following diagram indicates an example of BFS to find the shortest path via the above
+  method.
